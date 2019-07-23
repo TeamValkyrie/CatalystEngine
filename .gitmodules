@@ -1,0 +1,20 @@
+[submodule "Thirdparty/glm"]
+	path = Thirdparty/glm
+	url = https://github.com/g-truc/glm.git
+	branch = master
+[submodule "Thirdparty/glfw"]
+	path = Thirdparty/glfw
+	url = https://github.com/glfw/glfw.git
+	branch = master
+[submodule "Thirdparty/glad"]
+	path = Thirdparty/glad
+	url = https://github.com/Dav1dde/glad.git
+	branch = master
+[submodule "Thirdparty/cereal"]
+	path = Thirdparty/cereal
+	url = https://github.com/USCiLab/cereal.git
+	branch = master
+[submodule "Thirdparty/eastl"]
+	path = Thirdparty/eastl
+	url = https://github.com/electronicarts/EASTL.git
+	branch = master
