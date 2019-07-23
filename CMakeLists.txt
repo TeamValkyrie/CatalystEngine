@@ -17,8 +17,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(CatalystEngine)
 
 if(MSVC)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD /DRELEASE /DCRT_SECURE_NO_WARNINGS")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd /DDEBUG /D_CRT_SECURE_NO_WARNINGS")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD /DRELEASE /DIMGUI_IMPL_OPENGL_LOADER_GLAD /DCRT_SECURE_NO_WARNINGS")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd /DDEBUG /DIMGUI_IMPL_OPENGL_LOADER_GLAD /D_CRT_SECURE_NO_WARNINGS")
 add_definitions("${COMPILER_DEFINITIONS} /MP")
 endif()
 
@@ -38,7 +38,19 @@ file(GLOB_RECURSE INC
     "${SRC_DIR}/*.h"
 )
 
-add_executable(CatalystEngine ${SRC} ${INC})
+file(GLOB IMGUI
+	"${TRD_DIR}/imgui/imgui_internal.h"
+	"${TRD_DIR}/imgui/imgui.h"
+  "${TRD_DIR}/imgui/imgui.cpp"
+  "${TRD_DIR}/imgui/imgui_demo.cpp"
+  "${TRD_DIR}/imgui/imgui_widgets.cpp"
+	"${TRD_DIR}/imgui/imconfig.h"
+  "${TRD_DIR}/imgui/imgui_draw.cpp"
+  "${TRD_DIR}/imgui/examples/imgui_impl_opengl3.cpp"
+  "${TRD_DIR}/imgui/examples/imgui_impl_glfw.cpp"
+)
+
+add_executable(CatalystEngine ${SRC} ${INC} ${IMGUI})
 
 if(MSVC)
 target_compile_options(CatalystEngine PRIVATE /W4 /WX)
@@ -85,6 +97,8 @@ target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/glm/")
 
 ## imgui ##
 target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/imgui/")
+target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/imgui/examples/libs/gl3w")
 
 add_project_filters(${SRC_DIR} SRC Source)
 add_project_filters(${SRC_DIR} INC Include)
+add_project_filters(${TRD_DIR} IMGUI Thirdparty)

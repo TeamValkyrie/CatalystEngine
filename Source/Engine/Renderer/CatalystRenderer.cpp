@@ -4,6 +4,7 @@
 #include "GLFW/glfw3.h"
 
 #include "Engine/CatalystEngine.h"
+#include "Engine/Renderer/Editor/ImGuiRenderer.h"
 
 #include <iostream>
 
@@ -16,6 +17,18 @@ void WindowCloseCallback(GLFWwindow* /*window*/)
 {
 	printf("GLFW window: Close Callback triggered\n");
 	CTEngine->RequestShutdown();
+}
+
+CatalystRenderer::~CatalystRenderer()
+{
+	if (m_ImGuiRenderer) 
+	{
+		if (m_ImGuiRenderer->IsInitialized()) 
+		{
+			m_ImGuiRenderer->Deinit();
+		}
+		delete m_ImGuiRenderer;
+	}
 }
 
 void CatalystRenderer::Init()
@@ -48,13 +61,19 @@ void CatalystRenderer::Init()
 	glfwSetFramebufferSizeCallback(m_Window, WindowResizeCallback);
 	glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
 
+	m_ImGuiRenderer = new ImGuiRenderer();
+	m_ImGuiRenderer->Init();
+
 	Subsystem::Init();
 }
 
-void CatalystRenderer::Tick(float)
+void CatalystRenderer::Tick(float DeltaTime)
 {
 	if (IsInitialized()) 
 	{
+
+		m_ImGuiRenderer->Tick(DeltaTime);
+
 		glfwSwapBuffers(m_Window);
 		glfwPollEvents();
 
@@ -64,6 +83,8 @@ void CatalystRenderer::Tick(float)
 
 void CatalystRenderer::Deinit()
 {
+
+	m_ImGuiRenderer->Deinit();
 
 	glfwTerminate();
 
