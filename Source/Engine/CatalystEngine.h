@@ -19,9 +19,11 @@ private:
 
 	void TickEngine(float DeltaTime);
 
+	bool CanEngineShutdown();
+
 private:
 
-
+	class CatalystRenderer* m_Renderer;
 
 	bool bKeepEngineRunning;
 
