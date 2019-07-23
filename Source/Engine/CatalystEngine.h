@@ -21,11 +21,15 @@ private:
 
 	bool CanEngineShutdown();
 
+	void MainMenuBarEditor();
+
 private:
 
 	class CatalystRenderer* m_Renderer;
 
 	bool bKeepEngineRunning;
+
+	bool m_bShowEditor;
 
 };
 

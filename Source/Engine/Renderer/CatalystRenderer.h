@@ -13,6 +13,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void Deinit() override;
 
+	class ImGuiRenderer* GetImguiRenderer();
+
 private:
 
 	struct GLFWwindow* m_Window;

@@ -48,9 +48,14 @@ file(GLOB IMGUI
   "${TRD_DIR}/imgui/imgui_draw.cpp"
   "${TRD_DIR}/imgui/examples/imgui_impl_opengl3.cpp"
   "${TRD_DIR}/imgui/examples/imgui_impl_glfw.cpp"
+  
 )
 
-add_executable(CatalystEngine ${SRC} ${INC} ${IMGUI})
+file(GLOB EVENT
+  "${TRD_DIR}/eventdispatching/Events/EventDispatching.h"
+)
+
+add_executable(CatalystEngine ${SRC} ${INC} ${IMGUI} ${EVENT})
 
 if(MSVC)
 target_compile_options(CatalystEngine PRIVATE /W4 /WX)
@@ -99,6 +104,10 @@ target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/glm/")
 target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/imgui/")
 target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/imgui/examples/libs/gl3w")
 
+## EventDispatching ##
+target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/eventdispatching")
+
 add_project_filters(${SRC_DIR} SRC Source)
 add_project_filters(${SRC_DIR} INC Include)
 add_project_filters(${TRD_DIR} IMGUI Thirdparty)
+add_project_filters(${TRD_DIR} EVENT Thirdparty)

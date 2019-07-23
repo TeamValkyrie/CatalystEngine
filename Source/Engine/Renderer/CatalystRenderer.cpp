@@ -90,3 +90,8 @@ void CatalystRenderer::Deinit()
 
 	Subsystem::Deinit();
 }
+
+ImGuiRenderer* CatalystRenderer::GetImguiRenderer()
+{
+	return m_ImGuiRenderer;
+}

@@ -1,6 +1,9 @@
 #include "CatalystEngine.h"
 
 #include "Renderer/CatalystRenderer.h"
+#include "Renderer/Editor/ImGuiRenderer.h"
+
+#include "imgui.h"
 
 #include <iostream>
 
@@ -22,6 +25,13 @@ void CatalystEngine::Init()
 
 	m_Renderer = new CatalystRenderer();
 	m_Renderer->Init();
+
+	ImGuiRenderer* ImGuiRenderer = m_Renderer->GetImguiRenderer();
+	if (ImGuiRenderer) 
+	{
+		ImGuiRenderer->GetOnRenderEvent().Register<CatalystEngine>(this, &CatalystEngine::MainMenuBarEditor);
+	}
+
 }
 
 void CatalystEngine::Run()
@@ -58,4 +68,14 @@ void CatalystEngine::TickEngine(float /*DeltaTime*/)
 bool CatalystEngine::CanEngineShutdown()
 {
 	return true;
+}
+
+void CatalystEngine::MainMenuBarEditor()
+{
+	if (m_bShowEditor)
+	{
+		ImGui::BeginMainMenuBar();
+
+		ImGui::EndMainMenuBar();
+	}
 }
