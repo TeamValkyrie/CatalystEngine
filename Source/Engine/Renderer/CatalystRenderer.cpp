@@ -3,11 +3,19 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "Engine/CatalystEngine.h"
+
 #include <iostream>
 
 void WindowResizeCallback(GLFWwindow* /*window*/, int width, int height) 
 {
 	glViewport(0, 0, width, height);
+}
+
+void WindowCloseCallback(GLFWwindow* /*window*/) 
+{
+	printf("GLFW window: Close Callback triggered\n");
+	CTEngine->RequestShutdown();
 }
 
 void CatalystRenderer::Init()
@@ -20,7 +28,7 @@ void CatalystRenderer::Init()
 	m_Window = glfwCreateWindow(800, 600, "Catalyst Engine", NULL, NULL);
 	if (!m_Window)
 	{
-		printf("Failed to create GLFW Window");
+		printf("Failed to create GLFW Window\n");
 		glfwTerminate();
 		return;
 	}
@@ -29,23 +37,29 @@ void CatalystRenderer::Init()
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		printf("Failed to initialize GLAD");
+		printf("Failed to initialize GLAD\n");
 		return;
 	}
 
 	glViewport(0, 0, 800, 600);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	
+	//GLFW Callbacks
 	glfwSetFramebufferSizeCallback(m_Window, WindowResizeCallback);
+	glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
 
 	Subsystem::Init();
 }
 
 void CatalystRenderer::Tick(float)
 {
-	glfwSwapBuffers(m_Window);
-	glfwPollEvents();
+	if (IsInitialized()) 
+	{
+		glfwSwapBuffers(m_Window);
+		glfwPollEvents();
 
-	glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
 }
 
 void CatalystRenderer::Deinit()

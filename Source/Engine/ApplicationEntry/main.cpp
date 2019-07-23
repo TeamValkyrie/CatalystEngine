@@ -6,7 +6,7 @@
 int main() 
 {
 
-	CatalystEngine* CTEngine = new CatalystEngine();
+	CTEngine = new CatalystEngine();
 	CTEngine->Init();
 	CTEngine->Run();
 	CTEngine->Shutdown();

@@ -28,3 +28,5 @@ private:
 	bool bKeepEngineRunning;
 
 };
+
+extern CatalystEngine* CTEngine;

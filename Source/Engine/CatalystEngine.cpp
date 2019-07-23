@@ -2,6 +2,10 @@
 
 #include "Renderer/CatalystRenderer.h"
 
+#include <iostream>
+
+CatalystEngine* CTEngine = nullptr;
+
 CatalystEngine::CatalystEngine() : m_Renderer(nullptr), bKeepEngineRunning(true)
 {
 
@@ -14,6 +18,8 @@ CatalystEngine::~CatalystEngine()
 
 void CatalystEngine::Init()
 {
+	printf("Engine: Initialization\n");
+
 	m_Renderer = new CatalystRenderer();
 	m_Renderer->Init();
 }
@@ -29,6 +35,9 @@ void CatalystEngine::Run()
 
 void CatalystEngine::Shutdown()
 {
+
+	printf("Engine: Shutdown\n");
+
 	m_Renderer->Deinit();
 	delete m_Renderer;
 }
@@ -41,7 +50,7 @@ void CatalystEngine::RequestShutdown()
 	}
 }
 
-void CatalystEngine::TickEngine(float)
+void CatalystEngine::TickEngine(float /*DeltaTime*/)
 {
 
 }
