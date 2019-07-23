@@ -83,5 +83,8 @@ target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/cereal/include")
 ## glm ##
 target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/glm/")
 
+## imgui ##
+target_include_directories(CatalystEngine PRIVATE "${TRD_DIR}/imgui/")
+
 add_project_filters(${SRC_DIR} SRC Source)
 add_project_filters(${SRC_DIR} INC Include)
