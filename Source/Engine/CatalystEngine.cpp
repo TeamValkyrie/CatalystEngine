@@ -81,6 +81,14 @@ void CatalystEngine::MainMenuBarEditor()
 	{
 		ImGui::BeginMainMenuBar();
 
+		if(ImGui::BeginMenu("Profiling"))
+		{
+			m_TimerManager->TimerManagerMenuItem();
+			ImGui::EndMenu();
+		}
+
+		m_TimerManager->TimerManagerWindow();
+
 		ImGui::EndMainMenuBar();
 	}
 }
