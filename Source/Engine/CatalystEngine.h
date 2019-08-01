@@ -25,6 +25,7 @@ private:
 
 private:
 
+	class TimerManager* m_TimerManager;
 	class CatalystRenderer* m_Renderer;
 
 	bool bKeepEngineRunning;

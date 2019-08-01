@@ -3,13 +3,15 @@
 #include "Renderer/CatalystRenderer.h"
 #include "Renderer/Editor/ImGuiRenderer.h"
 
+#include "Time/TimerManager.h"
+
 #include "imgui.h"
 
 #include <iostream>
 
 CatalystEngine* CTEngine = nullptr;
 
-CatalystEngine::CatalystEngine() : m_Renderer(nullptr), bKeepEngineRunning(true)
+CatalystEngine::CatalystEngine() : m_TimerManager(nullptr), m_Renderer(nullptr), bKeepEngineRunning(true)
 {
 
 }
@@ -22,6 +24,9 @@ CatalystEngine::~CatalystEngine()
 void CatalystEngine::Init()
 {
 	printf("Engine: Initialization\n");
+
+	m_TimerManager = new TimerManager();
+	m_TimerManager->Init();
 
 	m_Renderer = new CatalystRenderer();
 	m_Renderer->Init();
@@ -38,8 +43,8 @@ void CatalystEngine::Run()
 {
 	while (bKeepEngineRunning) 
 	{
-		TickEngine(1.0f);
-		m_Renderer->Tick(1.0f);
+		m_TimerManager->Tick(1.0f);
+		TickEngine(m_TimerManager->DeltaTime());
 	}
 }
 
@@ -60,9 +65,9 @@ void CatalystEngine::RequestShutdown()
 	}
 }
 
-void CatalystEngine::TickEngine(float /*DeltaTime*/)
+void CatalystEngine::TickEngine(float DeltaTime)
 {
-
+	m_Renderer->Tick(DeltaTime);
 }
 
 bool CatalystEngine::CanEngineShutdown()
