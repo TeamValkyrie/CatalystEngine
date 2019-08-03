@@ -1,5 +1,7 @@
 #include "CatalystEngine.h"
 
+#include "Editor/Tools/Console.h"
+
 #include "Renderer/CatalystRenderer.h"
 #include "Renderer/Editor/ImGuiRenderer.h"
 
@@ -11,19 +13,20 @@
 
 CatalystEngine* CTEngine = nullptr;
 
-CatalystEngine::CatalystEngine() : m_TimerManager(nullptr), m_Renderer(nullptr), bKeepEngineRunning(true)
+CatalystEngine::CatalystEngine() : m_Console(nullptr), m_TimerManager(nullptr), m_Renderer(nullptr), bKeepEngineRunning(true), m_bShowEditor(true), m_bShowConsole(false)
 {
-
 }
 
 CatalystEngine::~CatalystEngine()
 {
-
 }
 
 void CatalystEngine::Init()
 {
 	printf("Engine: Initialization\n");
+
+	m_Console = new Console();
+	m_Console->Init();
 
 	m_TimerManager = new TimerManager();
 	m_TimerManager->Init();
@@ -67,6 +70,7 @@ void CatalystEngine::RequestShutdown()
 
 void CatalystEngine::TickEngine(float DeltaTime)
 {
+	m_Console->Tick(DeltaTime);
 	m_Renderer->Tick(DeltaTime);
 }
 
@@ -81,13 +85,21 @@ void CatalystEngine::MainMenuBarEditor()
 	{
 		ImGui::BeginMainMenuBar();
 
-		if(ImGui::BeginMenu("Profiling"))
+		if(ImGui::BeginMenu("Tools"))
 		{
 			m_TimerManager->TimerManagerMenuItem();
+
+			if (ImGui::MenuItem("Console", ""))
+			{
+				m_bShowConsole = !m_bShowConsole;
+			}
+
 			ImGui::EndMenu();
 		}
 
 		m_TimerManager->TimerManagerWindow();
+
+		m_Console->Draw("Console", &m_bShowConsole);
 
 		ImGui::EndMainMenuBar();
 	}

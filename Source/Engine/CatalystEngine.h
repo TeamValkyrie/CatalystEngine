@@ -25,12 +25,14 @@ private:
 
 private:
 
+	class Console* m_Console;
 	class TimerManager* m_TimerManager;
 	class CatalystRenderer* m_Renderer;
 
 	bool bKeepEngineRunning;
 
 	bool m_bShowEditor;
+	bool m_bShowConsole;
 
 };
 
