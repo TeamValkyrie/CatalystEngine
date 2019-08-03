@@ -37,8 +37,9 @@ void CatalystRenderer::Init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	m_Window = glfwCreateWindow(800, 600, "Catalyst Engine", NULL, NULL);
+	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+	glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
+	m_Window = glfwCreateWindow(1920, 1080, "Catalyst Engine", NULL, NULL);
 	if (!m_Window)
 	{
 		printf("Failed to create GLFW Window\n");
@@ -54,7 +55,11 @@ void CatalystRenderer::Init()
 		return;
 	}
 
-	glViewport(0, 0, 800, 600);
+
+	int WindowWidth = 0;
+	int WindowHeight = 0;
+	glfwGetWindowSize(m_Window, &WindowWidth, &WindowHeight);
+	glViewport(0, 0, WindowWidth, WindowHeight);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	
 	//GLFW Callbacks
