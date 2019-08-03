@@ -147,7 +147,7 @@ Command<int, char* []>* Console::CreateCommand(const char* CommandTitle)
 {
 	for (auto ExistingCommand : m_Commands) 
 	{
-		if (ExistingCommand->GetCommandName() == CommandTitle)
+		if (*ExistingCommand->GetCommandName() == *CommandTitle)
 		{
 			return ExistingCommand;
 		}
