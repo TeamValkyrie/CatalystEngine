@@ -25,6 +25,7 @@ private:
 
 private:
 
+	class InputManager* m_InputManager;
 	class Console* m_Console;
 	class TimerManager* m_TimerManager;
 	class CatalystRenderer* m_Renderer;

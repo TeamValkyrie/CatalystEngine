@@ -2,6 +2,8 @@
 
 #include "Editor/Tools/Console.h"
 
+#include "Input/InputManager.h"
+
 #include "Renderer/CatalystRenderer.h"
 #include "Renderer/Editor/ImGuiRenderer.h"
 
@@ -13,7 +15,7 @@
 
 CatalystEngine* CTEngine = nullptr;
 
-CatalystEngine::CatalystEngine() : m_Console(nullptr), m_TimerManager(nullptr), m_Renderer(nullptr), bKeepEngineRunning(true), m_bShowEditor(true), m_bShowConsole(false)
+CatalystEngine::CatalystEngine() : m_InputManager(nullptr), m_Console(nullptr), m_TimerManager(nullptr), m_Renderer(nullptr), bKeepEngineRunning(true), m_bShowEditor(true), m_bShowConsole(false)
 {
 }
 
@@ -24,6 +26,9 @@ CatalystEngine::~CatalystEngine()
 void CatalystEngine::Init()
 {
 	printf("Engine: Initialization\n");
+
+	m_InputManager = new InputManager();
+	m_InputManager->Init();
 
 	m_Console = new Console();
 	m_Console->Init();
@@ -40,7 +45,7 @@ void CatalystEngine::Init()
 		ImGuiRenderer->GetOnRenderEvent().Register<CatalystEngine>(this, &CatalystEngine::MainMenuBarEditor);
 	}
 
-	auto ShutdownCommand = m_Console->CreateCommand("shutdown");
+	Command<int, char*[]>* ShutdownCommand = m_Console->CreateCommand("shutdown");
 	ShutdownCommand->Register<CatalystEngine>(this, &CatalystEngine::RequestShutdown);
 
 
