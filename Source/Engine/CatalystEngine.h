@@ -13,7 +13,7 @@ public:
 	void Run();
 	void Shutdown();
 
-	void RequestShutdown();
+	void RequestShutdown(int NumArgs, char* Args[]);
 
 private:
 

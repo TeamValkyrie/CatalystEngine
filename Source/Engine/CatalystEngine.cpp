@@ -40,6 +40,10 @@ void CatalystEngine::Init()
 		ImGuiRenderer->GetOnRenderEvent().Register<CatalystEngine>(this, &CatalystEngine::MainMenuBarEditor);
 	}
 
+	auto ShutdownCommand = m_Console->CreateCommand("shutdown");
+	ShutdownCommand->Register<CatalystEngine>(this, &CatalystEngine::RequestShutdown);
+
+
 }
 
 void CatalystEngine::Run()
@@ -60,8 +64,11 @@ void CatalystEngine::Shutdown()
 	delete m_Renderer;
 }
 
-void CatalystEngine::RequestShutdown()
+void CatalystEngine::RequestShutdown(int, char*[])
 {
+
+	m_Console->AddLog("Shutdown Requested");
+
 	if (CanEngineShutdown()) 
 	{
 		bKeepEngineRunning = false;

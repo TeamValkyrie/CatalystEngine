@@ -2,10 +2,13 @@
 
 #include "Engine/Subsystem/Subsystem.h"
 
+#include "Command.h"
+
 #include "imgui.h"
 
 #include <vector>
 #include <ctype.h>
+
 
 class Console : public Subsystem
 {
@@ -23,6 +26,8 @@ public:
 	void AddLog(const char* Log, ...) IM_FMTARGS(2);
 	void Draw(const char* Title, bool* bShow);
 
+	Command<int, char* []>* CreateCommand(const char* CommandTitle);
+
 private:
 
 	void ExecuteCommand(char* Command);
@@ -37,7 +42,7 @@ private:
 
 	char InputBuf[256];
 	std::vector<char*> m_Entries;
-	std::vector<const char*> m_Commands;
+	std::vector<Command<int, char*[]>*> m_Commands;
 	std::vector<char*> m_History;
 
 	int m_HistoryPos;

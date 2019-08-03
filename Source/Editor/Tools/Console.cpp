@@ -1,5 +1,7 @@
 #include "Console.h"
 
+#include <Bits.h>
+
 Console::Console() : m_HistoryPos(-1),m_bAutoScroll(false), m_bScrollToBottom(false)
 {
 	memset(InputBuf, 0, sizeof(InputBuf));
@@ -141,7 +143,28 @@ void Console::Draw(const char* Title, bool* bShow)
 	}
 }
 
+Command<int, char* []>* Console::CreateCommand(const char* CommandTitle)
+{
+	for (auto ExistingCommand : m_Commands) 
+	{
+		if (ExistingCommand->GetCommandName() == CommandTitle)
+		{
+			return ExistingCommand;
+		}
+	}
+	Command<int, char*[]>* NewCommand = new Command<int, char*[]>();
+	NewCommand->SetCommandName(CommandTitle);
+	m_Commands.push_back(NewCommand);
+	return NewCommand;
+}
+
 void Console::ExecuteCommand(char* Command)
 {
-	AddLog("Trying to Execute %s but command handling has not yet been implemented", Command);
+	for (size_t i = 0; i < m_Commands.size(); i++)
+	{
+		if (*m_Commands[i]->GetCommandName() == *Command)
+		{
+			m_Commands[i]->Dispatch(0, nullptr);
+		}
+	}
 }

@@ -16,7 +16,7 @@ void WindowResizeCallback(GLFWwindow* /*window*/, int width, int height)
 void WindowCloseCallback(GLFWwindow* /*window*/) 
 {
 	printf("GLFW window: Close Callback triggered\n");
-	CTEngine->RequestShutdown();
+	CTEngine->RequestShutdown(0, nullptr);
 }
 
 CatalystRenderer::~CatalystRenderer()
