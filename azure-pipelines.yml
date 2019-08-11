@@ -6,9 +6,13 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- task: CMake@1
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: CMake@1
+    displayName: 'Cmake Debug Build'
+    inputs:
+      cmakeArgs: '--build --config Debug'
 
