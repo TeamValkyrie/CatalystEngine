@@ -10,9 +10,15 @@ jobs:
 - job: Windows
   pool:
     vmImage: 'ubuntu-latest'
+
   steps:
+  - task: CMake@1
+    displayName: 'Cmake ..'
+    inputs:
+      cmakeArgs: '..'
+
   - task: CMake@1
     displayName: 'Cmake Debug Build'
     inputs:
-      cmakeArgs: '--build --config Debug'
+      cmakeArgs: '--build . --config Debug'
 
