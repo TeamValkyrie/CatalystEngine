@@ -20,8 +20,10 @@ jobs:
     inputs:
       cmakeArgs: '..'
 
-  - task: CMake@1
-    displayName: 'Cmake Debug Build'
+  - task: VSBuild@1
+    displayName: 'Project Build: ${BuildConfiguration}'
     inputs:
-      cmakeArgs: '--build . --config Debug'
+      solution: '**.sln'
+      configuration: $(BuildConfiguration)
+
 
